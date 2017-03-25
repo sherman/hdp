@@ -1,0 +1,8 @@
+
+[all_nodes]
+master.hdp.local ansible_ssh_host=192.168.8.100
+node-0.hdp.local ansible_ssh_host=192.168.8.101
+node-1.hdp.local ansible_ssh_host=192.168.8.102
+
+[ambari]
+master.hdp.local

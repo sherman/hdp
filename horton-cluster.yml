@@ -1,0 +1,39 @@
+---
+
+- hosts: all
+  sudo: True
+  roles:
+    - { role: copy-ssh-id, username: "ambari"} #creates ambari user and shares public key across hosts
+    - role: pwdless-ssh #populates /etc/hosts and /etc/ssh/ssh_known_hosts with cluster nodes information
+
+- hosts: all
+  sudo: True
+  tasks:
+    - name: Installation of Console Tools
+      apt: name={{ item  }} state=present
+      with_items:
+        - wget
+        - curl
+        - python-software-properties
+        - chkconfig
+
+#setting up ambari
+
+- hosts: ambari
+  sudo: True
+  tasks:
+    - name: Adding Repos
+      shell: wget http://public-repo-1.hortonworks.com/ambari/ubuntu12/2.x/updates/2.2.2.0/ambari.list -O /etc/apt/sources.list.d/ambari.list
+
+    - apt_key: keyserver=keyserver.ubuntu.com id=B9733A7A07513CAD
+
+    - apt: name=ambari-server update_cache=yes state=present
+
+    - shell: ambari-server setup -s
+
+    - action: shell nohup ambari-server start
+      async: 1000000
+      poll: 0
+
+    - name: Copy private key to local machine
+      fetch: src=/home/ambari/.ssh/id_rsa dest=/tmp/fetched/amabri/private_key flat=yes
