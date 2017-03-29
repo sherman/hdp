@@ -17,4 +17,4 @@
       poll: 0
 
     - name: Copy private key to local machine
-      fetch: src=/home/ambari/.ssh/id_rsa dest=/tmp/fetched/amabri/private_key flat=yes
+      fetch: src=/home/ambari/.ssh/id_rsa dest=/tmp/fetched/ambari/private_key flat=yes
