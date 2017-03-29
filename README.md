@@ -35,4 +35,9 @@ sudo pg_createcluster 9.3 main --start
 sudo apt-get install postgresql-jdbc*
 sudo ambari-server setup --jdbc-db=postgres --jdbc-driver=/usr/share/java/postgresql-jdbc4.jar
 ```
+* When the hive metastore is installed don't forget to fix search path for ambari user
+```sql
+ALTER ROLE ambari SET search_path = ambari, public, pg_catalog ;
+```
+
 
