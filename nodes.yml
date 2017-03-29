@@ -1,0 +1,8 @@
+---
+
+- hosts: all
+  sudo: True
+  roles:
+    - { role: copy-ssh-id, username: "ambari"} #creates ambari user and shares public key across hosts
+    - role: pwdless-ssh #populates /etc/hosts and /etc/ssh/ssh_known_hosts with cluster nodes information
+    - role: common # install basic console tools

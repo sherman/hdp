@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ansible-playbook hdp.yml -vvvv -i hdp.hosts -c ssh -u vagrant
